@@ -717,9 +717,10 @@ textarea {
 
   .intro-band {
     display: flex;
-    overflow-x: auto;
+    overflow-x: hidden;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
+    touch-action: pan-y;
   }
 
   .intro-band::-webkit-scrollbar,
@@ -738,9 +739,10 @@ textarea {
   .process-grid {
     display: flex;
     gap: 14px;
-    overflow-x: auto;
+    overflow-x: hidden;
     scroll-snap-type: x mandatory;
     padding-bottom: 2px;
+    touch-action: pan-y;
   }
 
   .service-card {
@@ -756,9 +758,10 @@ textarea {
   .case-list {
     display: flex;
     gap: 14px;
-    overflow-x: auto;
+    overflow-x: hidden;
     scroll-snap-type: x mandatory;
     border: 0;
+    touch-action: pan-y;
   }
 
   .case-item {
@@ -823,16 +826,16 @@ textarea {
   }
 
   .clients-board {
-    width: calc(100% + 40px);
-    margin-inline: -20px;
+    width: 100%;
+    margin-inline: auto;
     padding: 10px;
-    border-radius: 0;
+    border-radius: 8px;
   }
 
   .clients-board img {
-    width: 170%;
-    max-width: none;
-    animation: mobileClientsPan 12s ease-in-out infinite alternate;
+    width: 100%;
+    max-width: 100%;
+    animation: none;
   }
 
   .testimonial-band {

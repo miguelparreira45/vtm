@@ -100,6 +100,18 @@ const advanceCarousel = (carousel) => {
   });
 };
 
+mobileCarousels.forEach((carousel) => {
+  carousel.addEventListener(
+    "touchmove",
+    (event) => {
+      if (window.matchMedia("(max-width: 720px)").matches) {
+        event.preventDefault();
+      }
+    },
+    { passive: false }
+  );
+});
+
 if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   window.setInterval(() => {
     mobileCarousels.forEach(advanceCarousel);

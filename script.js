@@ -3,6 +3,10 @@ const menuButton = document.querySelector("[data-menu-button]");
 const nav = document.querySelector("[data-nav]");
 const clientsSection = document.querySelector("[data-clients-section]");
 const counters = document.querySelectorAll("[data-count-up]");
+const revealTargets = document.querySelectorAll(
+  ".section-heading, .about-grid > *, .service-card, .case-item, .cases-showcase, .process-grid > *, .testimonial-band blockquote, .contact-form"
+);
+const mobileCarousels = document.querySelectorAll(".intro-band, .service-grid, .case-list, .process-grid");
 
 const syncHeader = () => {
   header.classList.toggle("is-scrolled", window.scrollY > 24);
@@ -59,6 +63,47 @@ if (clientsSection) {
   );
 
   revealClients.observe(clientsSection);
+}
+
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-revealed");
+      }
+    });
+  },
+  { threshold: 0.18 }
+);
+
+revealTargets.forEach((target) => {
+  target.classList.add("reveal-on-scroll");
+  revealObserver.observe(target);
+});
+
+const advanceCarousel = (carousel) => {
+  if (!window.matchMedia("(max-width: 720px)").matches) {
+    return;
+  }
+
+  const firstItem = carousel.children[0];
+  if (!firstItem) {
+    return;
+  }
+
+  const itemWidth = firstItem.getBoundingClientRect().width + 14;
+  const nearEnd = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 12;
+
+  carousel.scrollTo({
+    left: nearEnd ? 0 : carousel.scrollLeft + itemWidth,
+    behavior: "smooth",
+  });
+};
+
+if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  window.setInterval(() => {
+    mobileCarousels.forEach(advanceCarousel);
+  }, 3200);
 }
 
 document.querySelector(".contact-form").addEventListener("submit", (event) => {

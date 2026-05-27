@@ -86,21 +86,33 @@ const advanceCarousel = (carousel) => {
     return;
   }
 
-  const firstItem = carousel.children[0];
-  if (!firstItem) {
+  const items = [...carousel.children];
+  const firstItem = items[0];
+  if (!firstItem || !items.length) {
     return;
   }
 
   const itemWidth = firstItem.getBoundingClientRect().width + 14;
   const nearEnd = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 12;
+  const nextLeft = nearEnd ? 0 : carousel.scrollLeft + itemWidth;
 
   carousel.scrollTo({
-    left: nearEnd ? 0 : carousel.scrollLeft + itemWidth,
+    left: nextLeft,
     behavior: "smooth",
+  });
+
+  const nextIndex = nearEnd ? 0 : Math.min(Math.round(nextLeft / itemWidth), items.length - 1);
+  items.forEach((item, index) => {
+    item.classList.toggle("is-active-slide", index === nextIndex);
   });
 };
 
 mobileCarousels.forEach((carousel) => {
+  const items = [...carousel.children];
+  items.forEach((item, index) => {
+    item.classList.toggle("is-active-slide", index === 0);
+  });
+
   carousel.addEventListener(
     "touchmove",
     (event) => {

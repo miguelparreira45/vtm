@@ -721,6 +721,10 @@ textarea {
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     touch-action: pan-y;
+    pointer-events: none;
+    gap: 14px;
+    background: transparent;
+    border-block: 0;
   }
 
   .intro-band::-webkit-scrollbar,
@@ -731,8 +735,15 @@ textarea {
   }
 
   .metric {
-    min-width: 78%;
-    scroll-snap-align: start;
+    flex: 0 0 82%;
+    min-width: 82%;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    scroll-snap-align: center;
+    filter: blur(2px);
+    opacity: 0.42;
+    transform: scale(0.94);
+    transition: opacity 360ms ease, filter 360ms ease, transform 360ms ease;
   }
 
   .service-grid,
@@ -743,12 +754,17 @@ textarea {
     scroll-snap-type: x mandatory;
     padding-bottom: 2px;
     touch-action: pan-y;
+    pointer-events: none;
   }
 
   .service-card {
     flex: 0 0 84%;
     min-height: 250px;
     scroll-snap-align: center;
+    filter: blur(2px);
+    opacity: 0.42;
+    transform: scale(0.94);
+    transition: opacity 360ms ease, filter 360ms ease, transform 360ms ease;
   }
 
   .service-card h3 {
@@ -762,6 +778,7 @@ textarea {
     scroll-snap-type: x mandatory;
     border: 0;
     touch-action: pan-y;
+    pointer-events: none;
   }
 
   .case-item {
@@ -775,6 +792,10 @@ textarea {
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.035);
     scroll-snap-align: center;
+    filter: blur(2px);
+    opacity: 0.42;
+    transform: scale(0.94);
+    transition: opacity 360ms ease, filter 360ms ease, transform 360ms ease;
   }
 
   .case-item h3 {
@@ -805,6 +826,19 @@ textarea {
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.035);
     scroll-snap-align: center;
+    filter: blur(2px);
+    opacity: 0.42;
+    transform: scale(0.94);
+    transition: opacity 360ms ease, filter 360ms ease, transform 360ms ease;
+  }
+
+  .metric.is-active-slide,
+  .service-card.is-active-slide,
+  .case-item.is-active-slide,
+  .process-grid div.is-active-slide {
+    filter: blur(0);
+    opacity: 1;
+    transform: scale(1);
   }
 
   .clients-section .section-heading {

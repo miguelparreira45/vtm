@@ -2,6 +2,8 @@ const header = document.querySelector("[data-header]");
 const menuButton = document.querySelector("[data-menu-button]");
 const nav = document.querySelector("[data-nav]");
 const clientsSection = document.querySelector("[data-clients-section]");
+const portfolioSection = document.querySelector("[data-portfolio-section]");
+const portfolioSlides = document.querySelectorAll(".portfolio-slide");
 const counters = document.querySelectorAll("[data-count-up]");
 const revealTargets = document.querySelectorAll(
   ".section-heading, .about-grid > *, .service-card, .case-item, .cases-showcase, .process-grid > *, .testimonial-band blockquote, .contact-form"
@@ -63,6 +65,41 @@ if (clientsSection) {
   );
 
   revealClients.observe(clientsSection);
+}
+
+const syncPortfolio = (activeIndex) => {
+  const total = portfolioSlides.length;
+
+  portfolioSlides.forEach((slide, index) => {
+    const previous = (activeIndex - 1 + total) % total;
+    const next = (activeIndex + 1) % total;
+    const farPrevious = (activeIndex - 2 + total) % total;
+    const farNext = (activeIndex + 2) % total;
+
+    slide.classList.toggle("is-active", index === activeIndex);
+    slide.classList.toggle("is-prev", index === previous);
+    slide.classList.toggle("is-next", index === next);
+    slide.classList.toggle("is-far-prev", index === farPrevious);
+    slide.classList.toggle("is-far-next", index === farNext);
+  });
+};
+
+let portfolioIndex = 0;
+syncPortfolio(portfolioIndex);
+
+if (portfolioSection) {
+  const revealPortfolio = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          portfolioSection.classList.add("is-visible");
+        }
+      });
+    },
+    { threshold: 0.25 }
+  );
+
+  revealPortfolio.observe(portfolioSection);
 }
 
 const revealObserver = new IntersectionObserver(
@@ -128,6 +165,11 @@ if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   window.setInterval(() => {
     mobileCarousels.forEach(advanceCarousel);
   }, 3200);
+
+  window.setInterval(() => {
+    portfolioIndex = (portfolioIndex + 1) % portfolioSlides.length;
+    syncPortfolio(portfolioIndex);
+  }, 2600);
 }
 
 document.querySelector(".contact-form").addEventListener("submit", (event) => {
